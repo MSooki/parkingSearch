@@ -1,5 +1,6 @@
 package hu.bme.aut.android.map
 
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.location.Address
@@ -19,11 +20,16 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.io.IOException
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
-    override fun onMarkerClick(p0: Marker?) = false
+    override fun onMarkerClick(p0: Marker?): Boolean {
+        val createPlacesIntent = Intent(this, ShowPlacesActivity::class.java)
+        startActivity(createPlacesIntent)
+        return false
+    }
 
     private lateinit var map: GoogleMap
 
@@ -41,15 +47,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        /*
-
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener {
-            val createPostIntent = Intent(this, CreatePhotoActivity::class.java)
-            startActivity(createPostIntent)
+            val createPhotoIntent = Intent(this, CreatePhotoActivity::class.java)
+            startActivity(createPhotoIntent)
         }
-
-         */
     }
 
     /**
@@ -64,17 +66,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnMarker
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
 
-
-        /*
-        // Add a marker in Budapest and move the camera
-        val budapest = LatLng(47.49801, 19.03991)
-        map.addMarker(MarkerOptions().position(budapest).title("Marker in Budapest"))
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(budapest, 12.0f))
-
-
         map.getUiSettings().setZoomControlsEnabled(true)
         map.setOnMarkerClickListener(this)
-         */
 
         setUpMap()
     }
